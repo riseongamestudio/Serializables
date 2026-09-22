@@ -71,7 +71,7 @@ https://github.com/riseongamestudio/Serializables.git#v1.0.0
 | `EnumMap<TKey, TValue>` | Mỗi giá trị của enum một ô: như `Dictionary` nhưng luôn đủ key, lưu được, và vẫn đúng khi enum đổi |
 | `SerObject<T>`, `ListSerObject<T>` | Tham chiếu tới `UnityEngine.Object` qua interface `T`, asset hay object trong scene |
 | `SerRef<T>`, `ListSerRef<T>` | `[SerializeReference]` với ô chọn type riêng cho từng phần tử |
-| `SerMoment` | Mốc thời gian Unix, lấy theo đồng hồ máy hoặc giờ mạng |
+| `SerMoment` | Thời điểm lưu bằng mili giây Unix, dùng như `DateTime` ở UTC+0 |
 
 Attribute Odin gắn trên field kiểu bọc (`[InlineEditor]`, `[Required]`,
 `[PreviewField]`) có tác dụng lên giá trị bên trong, nhờ `ForwardAttributesTo` của
@@ -91,7 +91,7 @@ public class Example : MonoBehaviour {
     [SerializeField] private EnumMap<Sfx, AudioClip> clips;   // đủ ô Click, Win, Lose
     [SerializeField] private SerObject<IDamageable> target;   // kéo vào object nào cài IDamageable
     [SerializeField] private ListSerRef<IReward> rewards;     // mỗi phần tử chọn một lớp cài IReward
-    [SerializeField] private SerMoment createdAt;             // lưu dạng số giây Unix
+    [SerializeField] private SerMoment createdAt;             // lưu dạng mili giây Unix
 
     private void Start() {
         var click = clips[Sfx.Click];
@@ -109,7 +109,7 @@ public class Example : MonoBehaviour {
 | `EnumMap` | Map theo enum | [Runtime/EnumMap](Runtime/EnumMap/README.md) |
 | `SerObject`, `ListSerObject` | Tham chiếu object qua interface | [Runtime/SerObject](Runtime/SerObject/README.md) |
 | `SerRef`, `ListSerRef` | Managed reference có ô chọn type | [Runtime/SerRef](Runtime/SerRef/README.md) |
-| `SerMoment` | Mốc thời gian, giờ mạng | [Runtime/SerMoment](Runtime/SerMoment/README.md) |
+| `SerMoment` | Thời điểm, dùng như `DateTime` | [Runtime/SerMoment](Runtime/SerMoment/README.md) |
 
 Drawer cho Inspector nằm trong `Editor/`, cùng tên thư mục với thành phần.
 
