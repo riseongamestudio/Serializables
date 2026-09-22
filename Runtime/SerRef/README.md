@@ -49,9 +49,13 @@ là một `SerRef<T>` có ô chọn type riêng.
 
 ## Lưu JSON
 
-`SerRef<T>` gắn `[DataContract]`, nên Newtonsoft.Json ghi được thành
-`{"value": {...}}` mà pack không phụ thuộc Newtonsoft. `ListSerRef<T>` là `IList<T>`,
-Newtonsoft ghi thành mảng JSON `[...]`.
+Project có package `com.unity.nuget.newtonsoft-json` thì SerRef có converter riêng: JSON
+chỉ còn giá trị bên trong, `{"firstReward": {...}}`. Không có thì pack dựa vào
+`[DataContract]`, JSON ra `{"firstReward": {"value": {...}}}`. Hai dạng không đọc lẫn
+được, nên đừng bật hay tắt converter khi đã có file lưu SerRef.
+
+`ListSerRef<T>` là `IList<T>`, Newtonsoft ghi thành mảng JSON `[...]` dù có converter
+hay không.
 
 `T` là interface hoặc lớp abstract thì phải bật `TypeNameHandling` (thường là `Auto`)
 cả lúc ghi lẫn lúc đọc, không thì Newtonsoft không biết tạo lại lớp nào. Chỉ bật với dữ

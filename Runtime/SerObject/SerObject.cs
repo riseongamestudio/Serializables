@@ -29,11 +29,7 @@ namespace RiseOn.Serializables {
         public bool Equals(SerObject<TValue> other) => IsNull ? other.IsNull : value == other.value;
         public bool Equals(TValue other) => Equals(new SerObject<TValue>(other));
 
-        public override bool Equals(object obj) => obj switch {
-            SerObject<TValue> otherSerObj => Equals(otherSerObj)
-          , TValue otherObj               => Equals(otherObj)
-          , _                             => false
-        };
+        public override bool Equals(object obj) => obj is SerObject<TValue> other && Equals(other);
 
         public static bool operator ==(SerObject<TValue> left, SerObject<TValue> right) => left.Equals(right);
         public static bool operator !=(SerObject<TValue> left, SerObject<TValue> right) => !(left == right);

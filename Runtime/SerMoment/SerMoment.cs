@@ -14,7 +14,7 @@ namespace RiseOn.Serializables {
     /// </summary>
     [Serializable]
     [DataContract]
-    public struct SerMoment {
+    public partial struct SerMoment {
         [SerializeField]
         [DataMember(Name = nameof(value))]
         internal long value;

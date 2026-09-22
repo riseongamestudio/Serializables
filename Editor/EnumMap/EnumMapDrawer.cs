@@ -1,43 +1,37 @@
 using System;
-using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities.Editor;
-using Unity.Collections.LowLevel.Unsafe;
 using UnityEditor;
 using UnityEngine;
 
 namespace RiseOn.Serializables.Editor {
-    public class EnumMapDrawer<TEnumMap, TKey, TValue> : OdinValueDrawer<TEnumMap> 
+    public class EnumMapDrawer<TEnumMap, TKey, TValue> : OdinValueDrawer<TEnumMap>
         where TEnumMap : EnumMap<TKey, TValue>, new()
         where TKey : struct, Enum {
         private string searchText;
 
-        private InspectorProperty valuesProp;
+        private InspectorProperty entriesProp;
         private DisplayValueWhenSingleKeyAttribute displayValueWhenSingleKeyAttr;
         private bool needSyncEnumData;
 
         protected override void Initialize() {
-            valuesProp = Property.Children[nameof(EnumMap<TKey, TValue>._Values)];
+            entriesProp = Property.Children[nameof(EnumMap<TKey, TValue>.entries)];
 
             displayValueWhenSingleKeyAttr = Property.GetAttribute<DisplayValueWhenSingleKeyAttribute>();
 
-            var entry     = ValueEntry.SmartValue;
-            var trueNames = Enum.GetNames(typeof(TKey));
-            needSyncEnumData =
-                entry.Count != trueNames.Length
-             || !entry._KeyNames.SequenceEqual(trueNames);
+            needSyncEnumData = !ValueEntry.SmartValue.IsUpToDate;
         }
 
         protected override void DrawPropertyLayout(GUIContent label) {
-            var entry      = ValueEntry.SmartValue;
-            var entryLabel = label ?? Property.Label;
+            var map      = ValueEntry.SmartValue;
+            var mapLabel = label ?? Property.Label;
 
             TryDrawSyncAlert();
 
-            if (TryDrawValueWhenSingleKey(entry, entryLabel)) return;
+            if (TryDrawValueWhenSingleKey(map, mapLabel)) return;
 
-            DrawEnumMap(entry, entryLabel);
+            DrawEnumMap(map, mapLabel);
         }
 
         private void TryDrawSyncAlert() {
@@ -50,17 +44,17 @@ namespace RiseOn.Serializables.Editor {
             }
         }
 
-        private bool TryDrawValueWhenSingleKey(EnumMap<TKey, TValue> entry, GUIContent label) {
-            if (displayValueWhenSingleKeyAttr == null || entry.Count != 1) return false;
+        private bool TryDrawValueWhenSingleKey(EnumMap<TKey, TValue> map, GUIContent label) {
+            if (displayValueWhenSingleKeyAttr == null || map.Count != 1 || entriesProp.Children.Count == 0) return false;
 
             if (!string.IsNullOrEmpty(displayValueWhenSingleKeyAttr.Label)) label.text = displayValueWhenSingleKeyAttr.Label;
-            valuesProp.Children[0].Children[nameof(EnumMapItem<TValue>.value)].Draw(label);
+            entriesProp.Children[0].Draw(label);
             return true;
         }
 
-        private void DrawEnumMap(EnumMap<TKey, TValue> entry, GUIContent label) {
+        private void DrawEnumMap(EnumMap<TKey, TValue> map, GUIContent label) {
             SirenixEditorGUI.BeginBox();
-            
+
             SirenixEditorGUI.BeginToolbarBoxHeader();
             var evt         = Event.current;
             var isAltShift  = evt.alt && evt.shift;
@@ -76,23 +70,25 @@ namespace RiseOn.Serializables.Editor {
             if (newExpanded) {
                 searchText = SirenixEditorGUI.ToolbarSearchField(searchText, marginLeftRight: 0);
             }
-            
+
             SirenixEditorGUI.EndToolbarBoxHeader();
 
             if (SirenixEditorGUI.BeginFadeGroup(this, newExpanded)) {
-                var matchCnt  = 0;
-                var hasSearch = !string.IsNullOrWhiteSpace(searchText);
+                var matchCnt   = 0;
+                var hasSearch  = !string.IsNullOrWhiteSpace(searchText);
+                var entryCount = Math.Min(entriesProp.Children.Count, map.entries.Count);
 
                 SirenixEditorGUI.BeginVerticalList(false, false);
-                for (int i = 0; i < entry.Count; i++) {
-                    if (hasSearch && !entry._KeyNames[i].Contains(searchText, StringComparison.OrdinalIgnoreCase)) {
+                for (int i = 0; i < entryCount; i++) {
+                    var name = map.entries[i].name ?? string.Empty;
+                    if (hasSearch && !name.Contains(searchText, StringComparison.OrdinalIgnoreCase)) {
                         continue;
                     }
 
                     SirenixEditorGUI.BeginListItem(false);
-                    valuesProp.Children[i].Draw(new GUIContent(entry._KeyNames[i]));
+                    entriesProp.Children[i].Draw(new GUIContent(name));
                     SirenixEditorGUI.EndListItem();
-                    
+
                     matchCnt++;
                 }
                 SirenixEditorGUI.EndVerticalList();
@@ -105,7 +101,7 @@ namespace RiseOn.Serializables.Editor {
             }
 
             SirenixEditorGUI.EndFadeGroup();
-            
+
             SirenixEditorGUI.EndBox();
         }
 
@@ -118,28 +114,13 @@ namespace RiseOn.Serializables.Editor {
         }
 
         private void SyncEnumKey() {
-            var oldEntry = ValueEntry.SmartValue;
-            var newEntry = new TEnumMap();
+            var oldMap = ValueEntry.SmartValue;
+            var newMap = new TEnumMap();
 
-            for (int i = 0; i < newEntry.Count; ++i) {
-                for (int j = 0; j < oldEntry.Count; ++j) {
-                    if (newEntry._KeyNames[i] != oldEntry._KeyNames[j]) continue;
+            // Reading the old map already matches its saved entries by name, then by number.
+            foreach (var key in newMap.Keys) newMap[key] = oldMap[key];
 
-                    newEntry._Values[i]   = oldEntry._Values[j];
-                    oldEntry._KeyNames[j] = null;
-                }
-            }
-
-            for (int i = 0; i < newEntry.Count; ++i) {
-                for (int j = 0; j < oldEntry.Count; ++j) {
-                    if (oldEntry._KeyNames[j] == null) continue;
-                    if (!UnsafeUtility.EnumEquals(newEntry._Keys[i], oldEntry._Keys[j])) continue;
-
-                    newEntry._Values[i] = oldEntry._Values[j];
-                }
-            }
-
-            ValueEntry.SmartValue = newEntry;
+            ValueEntry.SmartValue = newMap;
             ValueEntry.ApplyChanges();
 
             needSyncEnumData = false;

@@ -24,9 +24,16 @@ Package `com.riseon.serializables`, namespace `RiseOn.Serializables`.
 | [`com.riseon.utils`](https://github.com/riseongamestudio/Utils/tree/main/Core#readme) 1.0.0 | Tự cài theo `package.json` | `ForwardAttributesTo`, cửa sổ tìm kiếm, `InlineEditorImitator` |
 | [Odin Inspector](https://odininspector.com) | Cài tay từ Asset Store | Drawer của mọi kiểu trong pack |
 | [DOTween](https://dotween.demigiant.com) | Cài tay từ Asset Store | `com.riseon.utils` cần |
+| `com.unity.nuget.newtonsoft-json` | Tùy chọn | Có thì bật converter JSON cho `SerRef`, `SerMoment`, `EnumMap` |
 
 "Tự cài" là khi cài qua OpenUPM; cài bằng git URL thì phải cài `com.riseon.utils`
 trước. Odin và DOTween không có trên UPM nên phải cài vào project trước.
+
+Converter JSON tự bật khi project có package Newtonsoft của Unity (define
+`HAS_NEWTONSOFT` trong assembly của pack). Project dùng DLL Newtonsoft bỏ trong
+`Assets/` thay vì package thì thêm `HAS_NEWTONSOFT` vào *Scripting Define Symbols*.
+Không có converter thì các kiểu vẫn ghi đọc JSON được, chỉ khác hình dạng; chi tiết ở
+mục Lưu JSON của từng thành phần.
 
 ## Cài đặt
 
@@ -61,7 +68,7 @@ https://github.com/riseongamestudio/Serializables.git#v1.0.0
 
 | Kiểu | Việc |
 |---|---|
-| `EnumMap<TKey, TValue>` | Mỗi giá trị của enum một ô: như `Dictionary` nhưng luôn đủ key và lưu được |
+| `EnumMap<TKey, TValue>` | Mỗi giá trị của enum một ô: như `Dictionary` nhưng luôn đủ key, lưu được, và vẫn đúng khi enum đổi |
 | `SerObject<T>`, `ListSerObject<T>` | Tham chiếu tới `UnityEngine.Object` qua interface `T`, asset hay object trong scene |
 | `SerRef<T>`, `ListSerRef<T>` | `[SerializeReference]` với ô chọn type riêng cho từng phần tử |
 | `SerMoment` | Mốc thời gian Unix, lấy theo đồng hồ máy hoặc giờ mạng |

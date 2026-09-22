@@ -7,7 +7,7 @@ namespace RiseOn.Serializables {
     [Serializable]
     [DataContract]
     [ForwardAttributesTo(nameof(value))]
-    public struct SerRef<TValue>
+    public partial struct SerRef<TValue>
         : IEquatable<SerRef<TValue>>
         , IEquatable<TValue>
         where TValue : class {
@@ -28,11 +28,7 @@ namespace RiseOn.Serializables {
         public bool Equals(SerRef<TValue> other) => ReferenceEquals(value, other.value);
         public bool Equals(TValue other) => Equals(new SerRef<TValue>(other));
 
-        public override bool Equals(object obj) => obj switch {
-            SerRef<TValue> otherSerRef => Equals(otherSerRef)
-          , TValue otherObj            => Equals(otherObj)
-          , _                          => false
-        };
+        public override bool Equals(object obj) => obj is SerRef<TValue> other && Equals(other);
 
         public static bool operator ==(SerRef<TValue> left, SerRef<TValue> right) => left.Equals(right);
         public static bool operator !=(SerRef<TValue> left, SerRef<TValue> right) => !(left == right);

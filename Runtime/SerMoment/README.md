@@ -37,10 +37,13 @@ Field đang bằng 0 được tự điền thời điểm hiện tại khi mở 
 
 ## Lưu JSON
 
-Struct gắn `[DataContract]`, field `value` gắn `[DataMember(Name = nameof(value))]`. Hai
-attribute này có sẵn trong .NET và Newtonsoft.Json đọc được, nên pack không phải phụ
-thuộc Newtonsoft. JSON ra dạng `{"value": 1758000000}`, giống `JsonUtility` của Unity
-(vốn đọc `[SerializeField]`).
+Project có package `com.unity.nuget.newtonsoft-json` thì SerMoment có converter riêng:
+JSON là số trơn `1758000000`, và vẫn đọc được dạng `{"value": 1758000000}` ghi từ trước.
+
+Không có converter thì pack dựa vào `[DataContract]` trên struct và
+`[DataMember(Name = nameof(value))]` trên field `value`. Hai attribute này có sẵn trong
+.NET và Newtonsoft.Json đọc được, nên pack không phải phụ thuộc Newtonsoft. JSON ra dạng
+`{"value": 1758000000}`, giống `JsonUtility` của Unity (vốn đọc `[SerializeField]`).
 
 - Có `[DataContract]` thì Newtonsoft chỉ lưu member gắn `[DataMember]`. Thêm field mới
   mà quên gắn thì field đó không vào JSON, và không có lỗi nào báo.
