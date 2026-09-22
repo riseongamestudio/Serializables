@@ -1,0 +1,16 @@
+{
+    "name": "RiseOn.Serializables",
+    "rootNamespace": "RiseOn.Serializables",
+    "references": [
+        "GUID:be7950620ed931c4aae4bf81e3d71075"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

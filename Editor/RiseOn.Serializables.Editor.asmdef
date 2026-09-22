@@ -1,0 +1,20 @@
+{
+    "name": "RiseOn.Serializables.Editor",
+    "rootNamespace": "RiseOn.Serializables.Editor",
+    "references": [
+        "GUID:be7950620ed931c4aae4bf81e3d71075",
+        "GUID:5b4f77b41498a454899add6af1332634",
+        "GUID:5a7049af32b040c4e84a250ba84578a7"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
