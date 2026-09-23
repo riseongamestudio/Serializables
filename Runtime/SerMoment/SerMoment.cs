@@ -159,9 +159,9 @@ namespace RiseOn.Serializables {
 
         public readonly bool Equals(SerMoment other) => unixMs == other.unixMs;
 
-        public override readonly bool Equals(object obj) => obj is SerMoment other && Equals(other);
+        public readonly override bool Equals(object obj) => obj is SerMoment other && Equals(other);
 
-        public override readonly int GetHashCode() => unixMs.GetHashCode();
+        public readonly override int GetHashCode() => unixMs.GetHashCode();
 
         public readonly int CompareTo(SerMoment other) => unixMs.CompareTo(other.unixMs);
 
@@ -208,7 +208,7 @@ namespace RiseOn.Serializables {
         #region Formatting and parsing
 
         /// <summary>ISO 8601 in UTC, like <c>2026-09-22T13:45:10.123Z</c>. <see cref="Parse"/> reads it back.</summary>
-        public override readonly string ToString() => ToString(null, null);
+        public readonly override string ToString() => ToString(null, null);
 
         public readonly string ToString(string format) => ToString(format, null);
 
