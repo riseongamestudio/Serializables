@@ -6,7 +6,8 @@ using UnityEngine;
 
 namespace RiseOn.Serializables.Editor {
     /// <summary>
-    /// Folded: the time in UTC+0, as text that can be selected and copied. Unfolded: one slider per part.
+    /// Folded: the time in UTC+0, as text that can be selected and copied.<br/>
+    /// Unfolded: one slider per part.<br/>
     /// Right-click for Now and Reset; Odin adds its own Copy and Paste, which move the value between fields.
     /// </summary>
     public class SerMomentDrawer : OdinValueDrawer<SerMoment>, IDefinesGenericMenuItems {

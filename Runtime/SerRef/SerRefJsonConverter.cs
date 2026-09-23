@@ -21,15 +21,16 @@ namespace RiseOn.Serializables {
     }
 
     /// <summary>
-    /// Writes a <see cref="SerRef{TValue}"/> as the value it wraps: <c>{"reward": {...}}</c> rather than
-    /// <c>{"reward": {"value": {...}}}</c>.
+    /// Writes a <see cref="SerRef{TValue}"/> as the value it wraps: <c>{"reward": {...}}</c> rather than <c>{"reward": {"value": {...}}}</c>.
     /// </summary>
     [Preserve]
     internal sealed class SerRefJsonConverter : JsonConverter {
         [Preserve]
         public SerRefJsonConverter() { }
 
-        public override bool CanConvert(Type objectType) => typeof(ISerRefJson).IsAssignableFrom(objectType);
+        public override bool CanConvert(Type objectType) {
+            return typeof(ISerRefJson).IsAssignableFrom(objectType);
+        }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
             ((ISerRefJson)value).WriteJson(writer, serializer);

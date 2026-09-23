@@ -87,15 +87,16 @@ namespace RiseOn.Serializables {
     }
 
     /// <summary>
-    /// Writes an <see cref="EnumMap{TKey,TValue}"/> as its entries (number, name, value) and reads it back the same
-    /// way Unity data is read: matched to the current enum by name, then by number.
+    /// Writes an <see cref="EnumMap{TKey,TValue}"/> as its entries (number, name, value) and reads it back the same way Unity data is read: matched to the current enum by name, then by number.
     /// </summary>
     [Preserve]
     internal sealed class EnumMapJsonConverter : JsonConverter {
         [Preserve]
         public EnumMapJsonConverter() { }
 
-        public override bool CanConvert(Type objectType) => typeof(IEnumMapJson).IsAssignableFrom(objectType);
+        public override bool CanConvert(Type objectType) {
+            return typeof(IEnumMapJson).IsAssignableFrom(objectType);
+        }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
             if (value is null) {

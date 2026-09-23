@@ -23,11 +23,10 @@ Package `com.riseon.serializables`, namespace `RiseOn.Serializables`.
 | Unity 6000.3 | | Bản đang dùng để phát triển |
 | [`com.riseon.utils`](https://github.com/riseongamestudio/Utils/tree/main/Core#readme) 1.0.0 | Tự cài theo `package.json` | `ForwardAttributesTo`, cửa sổ tìm kiếm, `InlineEditorImitator` |
 | [Odin Inspector](https://odininspector.com) | Cài tay từ Asset Store | Drawer của mọi kiểu trong pack |
-| [DOTween](https://dotween.demigiant.com) | Cài tay từ Asset Store | `com.riseon.utils` cần |
 | `com.unity.nuget.newtonsoft-json` | Tùy chọn | Có thì bật converter JSON cho `SerRef`, `SerMoment`, `EnumMap` |
 
 "Tự cài" là khi cài qua OpenUPM; cài bằng git URL thì phải cài `com.riseon.utils`
-trước. Odin và DOTween không có trên UPM nên phải cài vào project trước.
+trước. Odin không có trên UPM nên phải cài vào project trước.
 
 Converter JSON tự bật khi project có package Newtonsoft của Unity (define
 `HAS_NEWTONSOFT` trong assembly của pack). Project dùng DLL Newtonsoft bỏ trong

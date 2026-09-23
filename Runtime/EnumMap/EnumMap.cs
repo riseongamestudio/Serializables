@@ -14,8 +14,8 @@ namespace RiseOn.Serializables {
         [SerializeField] internal List<EnumMapEntry<TKey, TValue>> entries;
 
         /// <summary>
-        /// For each key of the current enum (in <see cref="EnumMapKeys{TKey}.Keys"/> order), the index of
-        /// its entry in <see cref="entries"/>, or -1 when the saved data has no entry for it. Null until resolved.
+        /// For each key of the current enum (in <see cref="EnumMapKeys{TKey}.Keys"/> order), the index of its entry in <see cref="entries"/>, or -1 when the saved data has no entry for it.<br/>
+        /// Null until resolved.
         /// </summary>
         private int[] entryIndices;
 
@@ -48,7 +48,9 @@ namespace RiseOn.Serializables {
             return dict;
         }
 
-        public bool ContainsKey(TKey key) => true; // Yes, of course.
+        public bool ContainsKey(TKey key) {
+            return true; // Yes, of course.
+        }
 
         public bool TryGetValue(TKey key, out TValue value) {
             if (!EnumMapKeys<TKey>.Ordinals.TryGetValue(key, out var ordinal)) {
@@ -110,8 +112,8 @@ namespace RiseOn.Serializables {
         }
 
         /// <summary>
-        /// Matches the saved entries to the keys of the current enum: by name first, then by number for the
-        /// keys still unmatched. The entries themselves are left untouched.
+        /// Matches the saved entries to the keys of the current enum: by name first, then by number for the keys still unmatched.<br/>
+        /// The entries themselves are left untouched.
         /// </summary>
         private static int[] ResolveEntryIndices(List<EnumMapEntry<TKey, TValue>> entries) {
             var keys    = EnumMapKeys<TKey>.Keys;
@@ -181,7 +183,9 @@ namespace RiseOn.Serializables {
 
             public void Dispose() { }
 
-            void IEnumerator.Reset() => index = -1;
+            void IEnumerator.Reset() {
+                index = -1;
+            }
         }
 
         public readonly struct KeyCollection : IReadOnlyCollection<TKey> {
@@ -215,7 +219,9 @@ namespace RiseOn.Serializables {
 
                 public void Dispose() { }
 
-                void IEnumerator.Reset() => index = -1;
+                void IEnumerator.Reset() {
+                    index = -1;
+                }
             }
         }
 
@@ -250,7 +256,9 @@ namespace RiseOn.Serializables {
 
                 public void Dispose() { }
 
-                void IEnumerator.Reset() => index = -1;
+                void IEnumerator.Reset() {
+                    index = -1;
+                }
             }
         }
 

@@ -10,8 +10,8 @@ namespace RiseOn.Serializables {
     public partial struct SerMoment { }
 
     /// <summary>
-    /// Writes a <see cref="SerMoment"/> as a bare number of Unix milliseconds. Reads that number, a date string in any
-    /// form <see cref="SerMoment.TryParse"/> accepts, and the <c>{"unixMs": N}</c> form written without this converter.
+    /// Writes a <see cref="SerMoment"/> as a bare number of Unix milliseconds.<br/>
+    /// Reads that number, a date string in any form <see cref="SerMoment.TryParse"/> accepts, and the <c>{"unixMs": N}</c> form written without this converter.
     /// </summary>
     [Preserve]
     internal sealed class SerMomentJsonConverter : JsonConverter<SerMoment> {

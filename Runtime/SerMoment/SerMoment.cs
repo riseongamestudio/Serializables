@@ -5,8 +5,9 @@ using UnityEngine;
 
 namespace RiseOn.Serializables {
     /// <summary>
-    /// A point in time that Unity can serialize, stored as Unix milliseconds. Works like a <see cref="DateTime"/> in
-    /// UTC+0: arithmetic, comparison, formatting and parsing. Precision is one millisecond.
+    /// A point in time that Unity can serialize, stored as Unix milliseconds.<br/>
+    /// Works like a <see cref="DateTime"/> in UTC+0: arithmetic, comparison, formatting and parsing.<br/>
+    /// Precision is one millisecond.
     /// </summary>
     [Serializable]
     [DataContract]
@@ -64,8 +65,8 @@ namespace RiseOn.Serializables {
         }
 
         /// <summary>
-        /// <see cref="DateTimeKind.Local"/> is converted to UTC, <see cref="DateTimeKind.Unspecified"/> is taken as UTC
-        /// already. Anything under a millisecond is dropped.
+        /// <see cref="DateTimeKind.Local"/> is converted to UTC, <see cref="DateTimeKind.Unspecified"/> is taken as UTC already.<br/>
+        /// Anything under a millisecond is dropped.
         /// </summary>
         public SerMoment(DateTime dateTime) : this(ToUnixMs(dateTime)) { }
 
@@ -106,8 +107,7 @@ namespace RiseOn.Serializables {
         public readonly SerMoment Date => new(Utc.Date);
 
         /// <summary>
-        /// The wall clock at <paramref name="offset"/> from UTC, as a <see cref="DateTime"/> of kind
-        /// <see cref="DateTimeKind.Unspecified"/>.
+        /// The wall clock at <paramref name="offset"/> from UTC, as a <see cref="DateTime"/> of kind <see cref="DateTimeKind.Unspecified"/>.
         /// </summary>
         public readonly DateTime ToDateTime(TimeSpan offset) => ToDateTimeOffset(offset).DateTime;
 
@@ -213,8 +213,8 @@ namespace RiseOn.Serializables {
         public readonly string ToString(string format) => ToString(format, null);
 
         /// <summary>
-        /// Formats the UTC+0 time with the format strings of <see cref="DateTimeOffset"/>. Without
-        /// <paramref name="formatProvider"/> it uses the invariant culture, so the text does not change with the device.
+        /// Formats the UTC+0 time with the format strings of <see cref="DateTimeOffset"/>.<br/>
+        /// Without <paramref name="formatProvider"/> it uses the invariant culture, so the text does not change with the device.
         /// </summary>
         public readonly string ToString(string format, IFormatProvider formatProvider) {
             if (unixMs is < MinUnixMs or > MaxUnixMs) return unixMs.ToString(CultureInfo.InvariantCulture);
@@ -234,10 +234,8 @@ namespace RiseOn.Serializables {
         }
 
         /// <summary>
-        /// Reads Unix milliseconds (a plain integer); ISO 8601 as <c>yyyy-MM-dd</c>, optionally followed by
-        /// <c>T</c> or a space, <c>HH:mm</c> or <c>HH:mm:ss</c> with up to 7 fraction digits, and <c>Z</c> or an offset;
-        /// RFC 1123 (<c>Tue, 22 Sep 2026 13:45:10 GMT</c>); and <c>dd/MM/yyyy</c> followed by nothing, <c>HH:mm</c>,
-        /// <c>HH:mm:ss</c> or <c>HH:mm:ss.fff</c>. Text without an offset is taken as UTC.
+        /// Reads Unix milliseconds (a plain integer); ISO 8601 as <c>yyyy-MM-dd</c>, optionally followed by <c>T</c> or a space, <c>HH:mm</c> or <c>HH:mm:ss</c> with up to 7 fraction digits, and <c>Z</c> or an offset; RFC 1123 (<c>Tue, 22 Sep 2026 13:45:10 GMT</c>); and <c>dd/MM/yyyy</c> followed by nothing, <c>HH:mm</c>, <c>HH:mm:ss</c> or <c>HH:mm:ss.fff</c>.<br/>
+        /// Text without an offset is taken as UTC.
         /// </summary>
         public static bool TryParse(string text, out SerMoment moment) {
             moment = default;

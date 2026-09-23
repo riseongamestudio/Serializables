@@ -2,8 +2,8 @@ using System;
 
 namespace RiseOn.Serializables {
     /// <summary>
-    /// On an <see cref="EnumMap{TKey,TValue}"/> field whose enum has a single member: draws that one value as a plain field
-    /// instead of the whole map. <see cref="Label"/> replaces the field label when set.
+    /// On an <see cref="EnumMap{TKey,TValue}"/> field whose enum has a single member: draws that one value as a plain field instead of the whole map.<br/>
+    /// <see cref="Label"/> replaces the field label when set.
     /// </summary>
     [AttributeUsage(AttributeTargets.Field)]
     public class FlattenSingleKeyAttribute : Attribute {
