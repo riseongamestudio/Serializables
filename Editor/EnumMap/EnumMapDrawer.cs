@@ -12,13 +12,13 @@ namespace RiseOn.Serializables.Editor {
         private string searchText;
 
         private InspectorProperty entriesProp;
-        private DisplayValueWhenSingleKeyAttribute displayValueWhenSingleKeyAttr;
+        private FlattenSingleKeyAttribute flattenSingleKeyAttr;
         private bool needSyncEnumData;
 
         protected override void Initialize() {
             entriesProp = Property.Children[nameof(EnumMap<TKey, TValue>.entries)];
 
-            displayValueWhenSingleKeyAttr = Property.GetAttribute<DisplayValueWhenSingleKeyAttribute>();
+            flattenSingleKeyAttr = Property.GetAttribute<FlattenSingleKeyAttribute>();
 
             needSyncEnumData = !ValueEntry.SmartValue.IsUpToDate;
         }
@@ -45,9 +45,9 @@ namespace RiseOn.Serializables.Editor {
         }
 
         private bool TryDrawValueWhenSingleKey(EnumMap<TKey, TValue> map, GUIContent label) {
-            if (displayValueWhenSingleKeyAttr == null || map.Count != 1 || entriesProp.Children.Count == 0) return false;
+            if (flattenSingleKeyAttr == null || map.Count != 1 || entriesProp.Children.Count == 0) return false;
 
-            if (!string.IsNullOrEmpty(displayValueWhenSingleKeyAttr.Label)) label.text = displayValueWhenSingleKeyAttr.Label;
+            if (!string.IsNullOrEmpty(flattenSingleKeyAttr.Label)) label.text = flattenSingleKeyAttr.Label;
             entriesProp.Children[0].Draw(label);
             return true;
         }

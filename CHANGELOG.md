@@ -10,6 +10,7 @@ Mọi thay đổi đáng kể của `com.riseon.serializables` được ghi ở 
 
 - `EnumMap<TKey, TValue>`: map theo enum, luôn đủ key, lưu được. Mỗi entry lưu cả số lẫn
   tên của key, nên giá trị vẫn đúng khi enum chèn, xóa hay đổi tên member.
+  `[FlattenSingleKey]` vẽ map của enum chỉ có một member thành một ô giá trị.
 - `SerObject<T>`, `ListSerObject<T>`: tham chiếu `UnityEngine.Object` qua interface. Nút chọn
   mở cửa sổ tìm kiếm của `com.riseon.utils`, tô sẵn giá trị đang gán.
 - `SerRef<T>`, `ListSerRef<T>`: `[SerializeReference]` có ô chọn type cho từng phần tử.

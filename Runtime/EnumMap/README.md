@@ -67,7 +67,7 @@ nguyên, trừ khi code ghi vào một member chưa có entry.
 - Mỗi entry một dòng, nhãn là tên đã lưu, có ô tìm theo tên.
 - Attribute Odin gắn trên field map (`[PreviewField]`, `[InlineEditor]`...) áp cho
   từng giá trị.
-- Enum chỉ có một giá trị: gắn `[DisplayValueWhenSingleKey("Nhãn")]` để chỉ hiện
+- Enum chỉ có một giá trị: gắn `[FlattenSingleKey("Nhãn")]` để chỉ hiện
   một ô thay vì cả danh sách.
 
 ## Lưu JSON
