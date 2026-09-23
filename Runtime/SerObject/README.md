@@ -26,7 +26,8 @@ foreach (var t in targets) t.Hit(1);
 ## Trong Inspector
 
 - Ô object có nút mở cửa sổ tìm kiếm, chỉ liệt kê object cài `T` trong tab Scene
-  và tab Assets.
+  và tab Assets (tab Assets gồm cả component trên object con của prefab). Cửa sổ mở
+  ra là tô sẵn giá trị đang gán.
 - Object chứa field là asset (prefab, ScriptableObject) thì chỉ chọn được asset;
   object trong scene thì chọn được cả object trong scene.
 - `[InlineEditor]` trên field vẽ editor lồng của object được chọn.

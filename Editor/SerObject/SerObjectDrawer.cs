@@ -72,7 +72,8 @@ namespace RiseOn.Serializables.Editor {
                   , onSelected: node => ApplyNewValue(node.Data as TValue)
                   , filterType: typeof(TValue)
                   , rootPrefab: rootPrefab
-                  , allowSceneObjects
+                  , allowSceneObjects: allowSceneObjects
+                  , current: ValueEntry.SmartValue.value
                 );
             }
         }
