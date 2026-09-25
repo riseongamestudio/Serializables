@@ -1,13 +1,13 @@
 {
   "name": "com.riseon.serializables",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "Serializables",
   "description": "Serializable wrappers with Odin drawers: EnumMap, SerObject (interface references to Unity objects), SerRef (managed references with type picker) and SerMoment (timestamps)",
-  "documentationUrl": "https://github.com/riseongamestudio/Serializables/blob/v1.0.0/README.md",
+  "documentationUrl": "https://github.com/riseongamestudio/Serializables/blob/v1.0.1/README.md",
   "author": {
     "name": "RiseOn"
   },
   "dependencies": {
-    "com.riseon.utils": "1.0.0"
+    "com.riseon.utils": "1.0.1"
   }
 }

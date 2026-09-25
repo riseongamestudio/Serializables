@@ -21,7 +21,7 @@ Package `com.riseon.serializables`, namespace `RiseOn.Serializables`.
 | Phụ thuộc | Cách có | Dùng cho |
 |---|---|---|
 | Unity 6000.3 | | Bản đang dùng để phát triển |
-| [`com.riseon.utils`](https://github.com/riseongamestudio/Utils/tree/main/Core#readme) 1.0.0 | Tự cài theo `package.json` | `ForwardAttributesTo`, cửa sổ tìm kiếm, `InlineEditorImitator` |
+| [`com.riseon.utils`](https://github.com/riseongamestudio/Utils/tree/main/Core#readme) 1.0.1 | Tự cài theo `package.json` | `ForwardAttributesTo`, cửa sổ tìm kiếm, `InlineEditorImitator` |
 | [Odin Inspector](https://odininspector.com) | Cài tay từ Asset Store | Drawer của mọi kiểu trong pack |
 | `com.unity.nuget.newtonsoft-json` | Tùy chọn | Có thì bật converter JSON cho `SerRef`, `SerMoment`, `EnumMap` |
 
@@ -49,7 +49,7 @@ mục Lưu JSON của từng thành phần.
     }
   ],
   "dependencies": {
-    "com.riseon.serializables": "1.0.0"
+    "com.riseon.serializables": "1.0.1"
   }
 }
 ```
@@ -58,7 +58,7 @@ mục Lưu JSON của từng thành phần.
 from git URL*:
 
 ```
-https://github.com/riseongamestudio/Serializables.git#v1.0.0
+https://github.com/riseongamestudio/Serializables.git#v1.0.1
 ```
 
 **Thư mục local**: `"com.riseon.serializables": "file:D:/path/to/Serializables"`.
