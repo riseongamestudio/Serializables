@@ -27,6 +27,7 @@ Package `com.riseon.serializables`, namespace `RiseOn.Serializables`.
 
 "Tự cài" là khi cài qua OpenUPM; cài bằng git URL thì phải cài `com.riseon.utils`
 trước. Odin không có trên UPM nên phải cài vào project trước.
+Thiếu Odin thì project báo một lỗi từ `RiseOn.Serializables.Requirements`.
 
 Converter JSON tự bật khi project có package Newtonsoft của Unity (define
 `HAS_NEWTONSOFT` trong assembly của pack). Project dùng DLL Newtonsoft bỏ trong
@@ -49,7 +50,7 @@ mục Lưu JSON của từng thành phần.
     }
   ],
   "dependencies": {
-    "com.riseon.serializables": "1.0.1"
+    "com.riseon.serializables": "1.0.2"
   }
 }
 ```
@@ -58,7 +59,7 @@ mục Lưu JSON của từng thành phần.
 from git URL*:
 
 ```
-https://github.com/riseongamestudio/Serializables.git#v1.0.1
+https://github.com/riseongamestudio/Serializables.git#v1.0.2
 ```
 
 **Thư mục local**: `"com.riseon.serializables": "file:D:/path/to/Serializables"`.
