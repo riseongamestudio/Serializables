@@ -1,4 +1,4 @@
-#if HAS_NEWTONSOFT
+#if SERIALIZABLES_SUPPORT_NEWTONSOFT
 using System;
 using System.Globalization;
 using Newtonsoft.Json;

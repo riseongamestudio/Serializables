@@ -4,6 +4,16 @@ Mọi thay đổi đáng kể của `com.riseon.serializables` được ghi ở 
 [Keep a Changelog](https://keepachangelog.com/vi/1.1.0/), đánh số theo
 [Semantic Versioning](https://semver.org/lang/vi/).
 
+## [1.0.3] - 2026-09-28
+
+### Đổi
+
+- Symbol bật converter JSON đổi từ `HAS_NEWTONSOFT` thành `SERIALIZABLES_SUPPORT_NEWTONSOFT`,
+  mang tiền tố tên pack để không trùng với symbol project tự đặt. Project dùng package
+  Newtonsoft không phải sửa gì. Project dùng DLL Newtonsoft và đã tự thêm `HAS_NEWTONSOFT` vào
+  *Scripting Define Symbols* thì đổi sang tên mới, nếu không các converter JSON sẽ không được
+  biên dịch.
+
 ## [1.0.2] - 2026-09-25
 
 ### Sửa

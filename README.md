@@ -30,8 +30,9 @@ trước. Odin không có trên UPM nên phải cài vào project trước.
 Thiếu Odin thì project báo một lỗi từ `RiseOn.Serializables.Requirements`.
 
 Converter JSON tự bật khi project có package Newtonsoft của Unity (define
-`HAS_NEWTONSOFT` trong assembly của pack). Project dùng DLL Newtonsoft bỏ trong
-`Assets/` thay vì package thì thêm `HAS_NEWTONSOFT` vào *Scripting Define Symbols*.
+`SERIALIZABLES_SUPPORT_NEWTONSOFT` trong assembly của pack). Project dùng DLL Newtonsoft
+bỏ trong `Assets/` thay vì package thì thêm `SERIALIZABLES_SUPPORT_NEWTONSOFT` vào
+*Scripting Define Symbols*.
 Không có converter thì các kiểu vẫn ghi đọc JSON được, chỉ khác hình dạng; chi tiết ở
 mục Lưu JSON của từng thành phần.
 
@@ -50,7 +51,7 @@ mục Lưu JSON của từng thành phần.
     }
   ],
   "dependencies": {
-    "com.riseon.serializables": "1.0.2"
+    "com.riseon.serializables": "1.0.3"
   }
 }
 ```
@@ -59,7 +60,7 @@ mục Lưu JSON của từng thành phần.
 from git URL*:
 
 ```
-https://github.com/riseongamestudio/Serializables.git#v1.0.2
+https://github.com/riseongamestudio/Serializables.git#v1.0.3
 ```
 
 **Thư mục local**: `"com.riseon.serializables": "file:D:/path/to/Serializables"`.
