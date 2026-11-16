@@ -25,7 +25,7 @@ Package `com.riseon.serializables`, namespace `RiseOn.Serializables`.
 | [Odin Inspector](https://odininspector.com) | Cài tay từ Asset Store | Drawer của mọi kiểu trong pack |
 | `com.unity.nuget.newtonsoft-json` | Tùy chọn | Có thì bật converter JSON cho `SerRef`, `SerMoment`, `EnumMap` |
 
-"Tự cài" là khi cài qua OpenUPM; cài bằng git URL thì phải cài `com.riseon.utils`
+"Tự cài" là khi cài qua registry; cài bằng git URL thì phải cài `com.riseon.utils`
 trước. Odin không có trên UPM nên phải cài vào project trước.
 Thiếu Odin thì project báo một lỗi từ `RiseOn.Serializables.Requirements`.
 
@@ -38,15 +38,15 @@ mục Lưu JSON của từng thành phần.
 
 ## Cài đặt
 
-**OpenUPM** (khuyên dùng): thêm registry OpenUPM với scope `com.riseon` vào
+**Registry RiseOn** (khuyên dùng): thêm registry RiseOn với scope `com.riseon` vào
 `Packages/manifest.json`, rồi thêm package:
 
 ```json
 {
   "scopedRegistries": [
     {
-      "name": "package.openupm.com",
-      "url": "https://package.openupm.com",
+      "name": "RiseOn",
+      "url": "https://upm.riseongamestudio.com",
       "scopes": ["com.riseon"]
     }
   ],
