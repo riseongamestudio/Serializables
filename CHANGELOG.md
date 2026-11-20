@@ -4,6 +4,34 @@ Mọi thay đổi đáng kể của `com.riseon.serializables` được ghi ở 
 [Keep a Changelog](https://keepachangelog.com/vi/1.1.0/), đánh số theo
 [Semantic Versioning](https://semver.org/lang/vi/).
 
+## [1.0.4] - 2026-11-20
+
+### Thêm
+
+- Kéo object từ Project hay Hierarchy vào `ListSerObject`: thả ở tay nắm, ở ×, ở khe giữa hai
+  dòng hay dưới dòng cuối thì chèn vào đúng chỗ đó, các dòng dạt ra mở một ô cho nó; thả lên ô
+  object của một dòng thì ô đó nhận; thả lên thanh tiêu đề thì thêm vào cuối, cả mục sáng lên.
+- + của `ListSerObject` mở cửa sổ tìm kiếm của ô `SerObject` và thêm object được chọn vào cuối;
+  chọn None thì thêm một dòng trống.
+
+### Đổi
+
+- `EnumMap` là một mục gập mở như mục của trang settings RiseOn: tên trên thanh, ô tìm trên
+  thanh khi mục mở, các key là dòng sọc của `SectionRows`. Gắn `HideLabel` thì chỉ vẽ các dòng,
+  không thanh và khung: nơi chứa map đã đặt tên và khung cho nó. Nút cập nhật key thành
+  **Update keys**, nằm trong hộp cảnh báo.
+- `ListSerRef`, `ListSerObject` vẽ thành mục `[SectionList]`: + trên thanh, × ở dòng, kéo tay
+  nắm đổi chỗ. Cần `com.riseon.utils` 1.0.15.
+- `EnumMap` bỏ Alt+Shift+click riêng của nó: Alt+click foldout của map mở hay gập mọi thứ
+  bên dưới nhờ `RecursiveFoldoutDrawer` của `com.riseon.utils`, như mọi foldout khác.
+
+### Bỏ
+
+- `[FlattenSingleKey]`: map của enum một member vẽ như mọi map khác. Xóa attribute khỏi field
+  đang gắn nó.
+- Drawer nhận object kéo vào mảng `SerObject<T>[]` và `List<SerObject<T>>`: hai kiểu đó là list
+  của Odin như mọi list khác. Muốn kéo object vào thì đổi field sang `ListSerObject<T>`.
+
 ## [1.0.3] - 2026-09-28
 
 ### Đổi

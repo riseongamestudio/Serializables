@@ -89,9 +89,7 @@ namespace RiseOn.Serializables.Editor {
                 if (serObj.value == null) continue;   // empty or destroyed, which is the required box's job
                 if (serObj.value is TValue) continue;
 
-                SirenixEditorGUI.MessageBox(
-                    $"{serObj.value.GetType().Name} is not a {typeof(TValue).Name}. Left over from an older type, and it reads as null at runtime."
-                  , MessageType.Error);
+                HelpBoxUtils.Draw($"{serObj.value.GetType().Name} is not a {typeof(TValue).Name}. Left over from an older type, and it reads as null at runtime.", MessageType.Error);
 
                 return true;
             }
@@ -107,7 +105,7 @@ namespace RiseOn.Serializables.Editor {
                 ? $"{Property.NiceName} is required."
                 : requiredAttr.ErrorMessage;
 
-            SirenixEditorGUI.MessageBox(message, (MessageType)requiredAttr.MessageType);
+            HelpBoxUtils.Draw(message, (MessageType) requiredAttr.MessageType);
         }
 
         private bool HasMissingRequiredValue() {

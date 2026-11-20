@@ -8,7 +8,7 @@ namespace RiseOn.Serializables {
     [Serializable]
     [ForwardAttributesTo(nameof(items))]
     public class ListSerRef<TValue> : IList<TValue>, IReadOnlyList<TValue> where TValue : class {
-        [SerializeField]
+        [SerializeField, SectionList]
         internal List<SerRef<TValue>> items = new();
 
         public int  Count      => items.Count;

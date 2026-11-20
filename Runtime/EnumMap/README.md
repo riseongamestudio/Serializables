@@ -62,13 +62,13 @@ nguyên, trừ khi code ghi vào một member chưa có entry.
 
 ## Trong Inspector
 
-- Entry lệch với enum hiện tại thì hiện cảnh báo. Bấm **Update all keys** để ghi lại
+- Entry lệch với enum hiện tại thì hiện cảnh báo. Bấm **Update keys** để ghi lại
   entry theo enum hiện tại, giá trị lấy đúng như lúc đọc ở trên.
-- Mỗi entry một dòng, nhãn là tên đã lưu, có ô tìm theo tên.
+- Map là một mục gập mở như mục của trang settings RiseOn, mỗi entry một dòng, nhãn là tên
+  đã lưu. Khi mục mở, thanh có ô tìm theo tên. Field gắn `[HideLabel]` thì chỉ hiện các dòng,
+  không có thanh.
 - Attribute Odin gắn trên field map (`[PreviewField]`, `[InlineEditor]`...) áp cho
   từng giá trị.
-- Enum chỉ có một giá trị: gắn `[FlattenSingleKey("Nhãn")]` để chỉ hiện
-  một ô thay vì cả danh sách.
 
 ## Lưu JSON
 

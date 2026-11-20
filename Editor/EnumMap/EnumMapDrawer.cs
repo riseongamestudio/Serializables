@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
+using RiseOn.Utils.Editor;
 using Sirenix.Utilities.Editor;
 using UnityEditor;
 using UnityEngine;
@@ -9,108 +12,64 @@ namespace RiseOn.Serializables.Editor {
     public class EnumMapDrawer<TEnumMap, TKey, TValue> : OdinValueDrawer<TEnumMap>
         where TEnumMap : EnumMap<TKey, TValue>, new()
         where TKey : struct, Enum {
+        private readonly SectionRows rows  = new();
+        private readonly List<int>    shown = new();
+
         private string searchText;
 
         private InspectorProperty entriesProp;
-        private FlattenSingleKeyAttribute flattenSingleKeyAttr;
         private bool needSyncEnumData;
 
         protected override void Initialize() {
             entriesProp = Property.Children[nameof(EnumMap<TKey, TValue>.entries)];
 
-            flattenSingleKeyAttr = Property.GetAttribute<FlattenSingleKeyAttribute>();
-
             needSyncEnumData = !ValueEntry.SmartValue.IsUpToDate;
+            Section.Restore(Property);
         }
 
         protected override void DrawPropertyLayout(GUIContent label) {
-            var map      = ValueEntry.SmartValue;
-            var mapLabel = label ?? Property.Label;
+            var map = ValueEntry.SmartValue;
 
             TryDrawSyncAlert();
 
-            if (TryDrawValueWhenSingleKey(map, mapLabel)) return;
+            // Odin passes no label under HideLabel: the owner titles and frames the map, so only the rows draw.
+            if (label == null) {
+                DrawRows(map);
+                return;
+            }
 
-            DrawEnumMap(map, mapLabel);
+            // A settings page's section, the keys its rows; the search, in the bar's value column, while it is open.
+            using var section = Section.Foldout(Property, label.text, label.tooltip, padded: false, barValue: true);
+            if (Property.State.Expanded) searchText = EditorGUI.TextField(section.BarValue, searchText, EditorStyles.toolbarSearchField);
+            if (!section.Open) return;
+
+            DrawRows(map);
+        }
+
+        private void DrawRows(EnumMap<TKey, TValue> map) {
+            var entryCount = Math.Min(entriesProp.Children.Count, map.entries.Count);
+            var hasSearch  = !string.IsNullOrWhiteSpace(searchText);
+            shown.Clear();
+            for (var i = 0; i < entryCount; i++) {
+                if (!hasSearch || KeyLabel(map.entries[i].name).Contains(searchText, StringComparison.OrdinalIgnoreCase)) shown.Add(i);
+            }
+
+            rows.Draw(shown.Count, i => entriesProp.Children[shown[i]].Draw(new GUIContent(KeyLabel(map.entries[shown[i]].name))),
+                hasSearch ? $"No keys match '{searchText}'" : $"{typeof(TKey).Name} is empty");
+        }
+
+        // The key as the enum names it in the Inspector: its InspectorName, else the readable member name.
+        private static string KeyLabel(string member) {
+            if (string.IsNullOrEmpty(member)) return string.Empty;
+
+            var named = typeof(TKey).GetField(member)?.GetCustomAttribute<InspectorNameAttribute>();
+            return named != null ? named.displayName : ObjectNames.NicifyVariableName(member);
         }
 
         private void TryDrawSyncAlert() {
             if (!needSyncEnumData) return;
 
-            SirenixEditorGUI.WarningMessageBox("The keys of this enum are not up to date!");
-
-            if (SirenixEditorGUI.SDFIconButton("Update all keys", EditorGUIUtility.singleLineHeight, SdfIconType.ArrowRepeat)) {
-                SyncEnumKey();
-            }
-        }
-
-        private bool TryDrawValueWhenSingleKey(EnumMap<TKey, TValue> map, GUIContent label) {
-            if (flattenSingleKeyAttr == null || map.Count != 1 || entriesProp.Children.Count == 0) return false;
-
-            if (!string.IsNullOrEmpty(flattenSingleKeyAttr.Label)) label.text = flattenSingleKeyAttr.Label;
-            entriesProp.Children[0].Draw(label);
-            return true;
-        }
-
-        private void DrawEnumMap(EnumMap<TKey, TValue> map, GUIContent label) {
-            SirenixEditorGUI.BeginBox();
-
-            SirenixEditorGUI.BeginToolbarBoxHeader();
-            var evt         = Event.current;
-            var isAltShift  = evt.alt && evt.shift;
-            var curExpanded = Property.State.Expanded;
-            var newExpanded = SirenixEditorGUI.Foldout(curExpanded, label);
-
-            if (curExpanded != newExpanded && evt.type == EventType.Used) {
-                if (isAltShift) SetAllChildrenExpanded(Property, newExpanded);
-
-                Property.State.Expanded = newExpanded;
-            }
-
-            if (newExpanded) {
-                searchText = SirenixEditorGUI.ToolbarSearchField(searchText, marginLeftRight: 0);
-            }
-
-            SirenixEditorGUI.EndToolbarBoxHeader();
-
-            if (SirenixEditorGUI.BeginFadeGroup(this, newExpanded)) {
-                var matchCnt   = 0;
-                var hasSearch  = !string.IsNullOrWhiteSpace(searchText);
-                var entryCount = Math.Min(entriesProp.Children.Count, map.entries.Count);
-
-                SirenixEditorGUI.BeginVerticalList(false, false);
-                for (int i = 0; i < entryCount; i++) {
-                    var name = map.entries[i].name ?? string.Empty;
-                    if (hasSearch && !name.Contains(searchText, StringComparison.OrdinalIgnoreCase)) {
-                        continue;
-                    }
-
-                    SirenixEditorGUI.BeginListItem(false);
-                    entriesProp.Children[i].Draw(new GUIContent(name));
-                    SirenixEditorGUI.EndListItem();
-
-                    matchCnt++;
-                }
-                SirenixEditorGUI.EndVerticalList();
-
-                if (matchCnt == 0) {
-                    SirenixEditorGUI.InfoMessageBox(hasSearch
-                        ? $"No keys match '{searchText}'"
-                        : $"{typeof(TKey).Name} is empty");
-                }
-            }
-
-            SirenixEditorGUI.EndFadeGroup();
-
-            SirenixEditorGUI.EndBox();
-        }
-
-        private void SetAllChildrenExpanded(InspectorProperty prop, bool isExpanded) {
-            prop.State.Expanded = isExpanded;
-
-            if (prop.Children is not { Count: > 0 }) return;
-
-            foreach (var child in prop.Children) { SetAllChildrenExpanded(child, isExpanded); }
+            if (HelpBoxUtils.Draw($"The keys no longer match {typeof(TKey).Name}: it gained, lost or renamed a member since the map was saved.", MessageType.Warning, new GUIContent("Update keys", "Takes the keys from the enum, keeping each value whose key is still there"))) SyncEnumKey();
         }
 
         private void SyncEnumKey() {

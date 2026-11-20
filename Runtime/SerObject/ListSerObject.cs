@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using RiseOn.Utils;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace RiseOn.Serializables {
     [Serializable]
     [ForwardAttributesTo(nameof(items))]
     public class ListSerObject<TValue> : IList<TValue>, IReadOnlyList<TValue> where TValue : class {
-        [SerializeField]
+        [SerializeField, SectionList(Drop = "Dropped", Pick = "PickType")]
         internal List<SerObject<TValue>> items = new();
 
         public int  Count      => items.Count;
@@ -66,6 +67,17 @@ namespace RiseOn.Serializables {
         IEnumerator IEnumerable.GetEnumerator() {
             return GetEnumerator();
         }
+
+#if UNITY_EDITOR
+        private static Type PickType => typeof(TValue);
+
+        // What an object dropped on the list adds: the object if it is a TValue, else a game object's first component that is.
+        private SerObject<TValue> Dropped(Object obj) {
+            if (obj is TValue value) return new(value);
+
+            return obj is GameObject gameObject && gameObject.TryGetComponent(typeof(TValue), out var component) ? new(component as TValue) : default;
+        }
+#endif
 
         public struct Enumerator : IEnumerator<TValue> {
             private readonly List<SerObject<TValue>> items;

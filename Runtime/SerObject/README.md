@@ -31,6 +31,11 @@ foreach (var t in targets) t.Hit(1);
 - Object chứa field là asset (prefab, ScriptableObject) thì chỉ chọn được asset;
   object trong scene thì chọn được cả object trong scene.
 - `[InlineEditor]` trên field vẽ editor lồng của object được chọn.
+- `ListSerObject<T>` là một mục `[SectionList]` của `com.riseon.utils`: + mở cửa sổ tìm kiếm
+  như trên và thêm object được chọn vào cuối, chọn None thì thêm một dòng trống. Kéo object
+  từ Project hay Hierarchy vào list thì object chèn vào chỗ thả, hay vào ô object dưới con trỏ (xem
+  [`[SectionList]`](https://github.com/riseongamestudio/Utils/blob/main/Core/Editor/Utils/README.md#attribute-trong-lớp-dữ-liệu)).
+  Game object được thả thì list lấy component đầu tiên cài `T` của nó.
 
 ## Lưu JSON
 
