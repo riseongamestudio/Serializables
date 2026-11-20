@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using RiseOn.Utils;
@@ -19,16 +19,16 @@ namespace RiseOn.Serializables {
         /// </summary>
         private int[] entryIndices;
 
-        public int             Count  => EnumMapKeys<TKey>.Keys.Length;
-        public KeyCollection   Keys   => new(EnumMapKeys<TKey>.Keys);
+        public int             Count  => EnumMapKeys<TKey>.keys.Length;
+        public KeyCollection   Keys   => new(EnumMapKeys<TKey>.keys);
         public ValueCollection Values => new(this);
 
         IEnumerable<TKey>   IReadOnlyDictionary<TKey, TValue>.Keys   => Keys;
         IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values => Values;
 
         public EnumMap() {
-            var keys  = EnumMapKeys<TKey>.Keys;
-            var names = EnumMapKeys<TKey>.Names;
+            var keys  = EnumMapKeys<TKey>.keys;
+            var names = EnumMapKeys<TKey>.names;
 
             entries      = new List<EnumMapEntry<TKey, TValue>>(keys.Length);
             entryIndices = new int[keys.Length];
@@ -53,7 +53,7 @@ namespace RiseOn.Serializables {
         }
 
         public bool TryGetValue(TKey key, out TValue value) {
-            if (!EnumMapKeys<TKey>.Ordinals.TryGetValue(key, out var ordinal)) {
+            if (!EnumMapKeys<TKey>.ordinals.TryGetValue(key, out var ordinal)) {
                 value = default;
                 return false;
             }
@@ -71,7 +71,7 @@ namespace RiseOn.Serializables {
                 if (index < 0) {
                     // The saved data predates this key: the first write adds its entry.
                     entryIndices[ordinal] = entries.Count;
-                    entries.Add(new EnumMapEntry<TKey, TValue>(key, EnumMapKeys<TKey>.Names[ordinal], value));
+                    entries.Add(new EnumMapEntry<TKey, TValue>(key, EnumMapKeys<TKey>.names[ordinal], value));
                     return;
                 }
 
@@ -94,13 +94,13 @@ namespace RiseOn.Serializables {
         private int[] ResolvedEntryIndices => entryIndices ??= ResolveEntryIndices(entries ??= new());
 
         private static int OrdinalOf(TKey key) {
-            if (!EnumMapKeys<TKey>.Ordinals.TryGetValue(key, out var ordinal)) throw new InvalidKeyException();
+            if (!EnumMapKeys<TKey>.ordinals.TryGetValue(key, out var ordinal)) throw new InvalidKeyException();
             return ordinal;
         }
 
         private static bool MatchesEnum(List<EnumMapEntry<TKey, TValue>> entries) {
-            var keys  = EnumMapKeys<TKey>.Keys;
-            var names = EnumMapKeys<TKey>.Names;
+            var keys  = EnumMapKeys<TKey>.keys;
+            var names = EnumMapKeys<TKey>.names;
             if (entries == null || entries.Count != keys.Length) return false;
 
             var comparer = EqualityComparer<TKey>.Default;
@@ -116,8 +116,8 @@ namespace RiseOn.Serializables {
         /// The entries themselves are left untouched.
         /// </summary>
         private static int[] ResolveEntryIndices(List<EnumMapEntry<TKey, TValue>> entries) {
-            var keys    = EnumMapKeys<TKey>.Keys;
-            var names   = EnumMapKeys<TKey>.Names;
+            var keys    = EnumMapKeys<TKey>.keys;
+            var names   = EnumMapKeys<TKey>.names;
             var indices = new int[keys.Length];
 
             if (MatchesEnum(entries)) {
@@ -175,7 +175,7 @@ namespace RiseOn.Serializables {
                 index    = -1;
             }
 
-            public KeyValuePair<TKey, TValue> Current => new(EnumMapKeys<TKey>.Keys[index], map.ValueAt(index));
+            public KeyValuePair<TKey, TValue> Current => new(EnumMapKeys<TKey>.keys[index], map.ValueAt(index));
 
             object IEnumerator.Current => Current;
 
@@ -271,14 +271,14 @@ namespace RiseOn.Serializables {
     /// Keys and names of an enum, read once per enum type.
     /// </summary>
     internal static class EnumMapKeys<TKey> where TKey : struct, Enum {
-        internal static readonly TKey[]   Keys  = (TKey[])Enum.GetValues(typeof(TKey));
-        internal static readonly string[] Names = Enum.GetNames(typeof(TKey));
+        internal static readonly TKey[]   keys  = (TKey[])Enum.GetValues(typeof(TKey));
+        internal static readonly string[] names = Enum.GetNames(typeof(TKey));
 
-        internal static readonly Dictionary<TKey, int> Ordinals = CreateOrdinals();
+        internal static readonly Dictionary<TKey, int> ordinals = CreateOrdinals();
 
         private static Dictionary<TKey, int> CreateOrdinals() {
-            var ordinals = new Dictionary<TKey, int>(Keys.Length);
-            for (int i = 0; i < Keys.Length; ++i) ordinals.Add(Keys[i], i);
+            var ordinals = new Dictionary<TKey, int>(keys.Length);
+            for (int i = 0; i < keys.Length; ++i) ordinals.Add(keys[i], i);
             return ordinals;
         }
     }

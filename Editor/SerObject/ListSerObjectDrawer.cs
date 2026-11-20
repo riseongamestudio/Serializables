@@ -1,4 +1,4 @@
-using Sirenix.OdinInspector.Editor;
+﻿using Sirenix.OdinInspector.Editor;
 using UnityEngine;
 
 namespace RiseOn.Serializables.Editor {

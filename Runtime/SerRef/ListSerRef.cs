@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using RiseOn.Utils;
@@ -32,7 +32,7 @@ namespace RiseOn.Serializables {
         }
 
         public void CopyTo(TValue[] array, int arrayIndex) {
-            if (array is null) throw new ArgumentNullException(nameof(array));
+            if (array == null) throw new ArgumentNullException(nameof(array));
             if (arrayIndex < 0) throw new ArgumentOutOfRangeException(nameof(arrayIndex));
             if (array.Length - arrayIndex < Count) throw new ArgumentException("Destination array is not long enough.", nameof(array));
 

@@ -1,4 +1,4 @@
-#if SERIALIZABLES_SUPPORT_NEWTONSOFT
+﻿#if SERIALIZABLES_SUPPORT_NEWTONSOFT
 using System;
 using System.Globalization;
 using Newtonsoft.Json;
@@ -13,8 +13,8 @@ namespace RiseOn.Serializables {
         private const string ValueProperty = nameof(EnumMapEntry<TKey, TValue>.value);
 
         void IEnumMapJson.WriteJson(JsonWriter writer, JsonSerializer serializer) {
-            var keys          = EnumMapKeys<TKey>.Keys;
-            var names         = EnumMapKeys<TKey>.Names;
+            var keys          = EnumMapKeys<TKey>.keys;
+            var names         = EnumMapKeys<TKey>.names;
             var numberType    = Enum.GetUnderlyingType(typeof(TKey));
 
             writer.WriteStartArray();
@@ -46,9 +46,9 @@ namespace RiseOn.Serializables {
             } else if (reader.TokenType is JsonToken.StartObject) {
                 // {"Name": value}: what Newtonsoft writes for the map when this converter is not compiled.
                 foreach (var property in JObject.Load(reader).Properties()) {
-                    var ordinal = Array.IndexOf(EnumMapKeys<TKey>.Names, property.Name);
+                    var ordinal = Array.IndexOf(EnumMapKeys<TKey>.names, property.Name);
                     if (ordinal >= 0) {
-                        entries.Add(new EnumMapEntry<TKey, TValue>(EnumMapKeys<TKey>.Keys[ordinal], property.Name, ReadValue(property.Value, serializer)));
+                        entries.Add(new EnumMapEntry<TKey, TValue>(EnumMapKeys<TKey>.keys[ordinal], property.Name, ReadValue(property.Value, serializer)));
                     } else if (long.TryParse(property.Name, NumberStyles.Integer, CultureInfo.InvariantCulture, out var number)) {
                         entries.Add(new EnumMapEntry<TKey, TValue>((TKey)Enum.ToObject(typeof(TKey), number), null, ReadValue(property.Value, serializer)));
                     }
@@ -61,7 +61,8 @@ namespace RiseOn.Serializables {
         }
 
         /// <summary>
-        /// Reads the saved number of an entry. An entry without a readable number can still be matched by name.
+        /// Reads the saved number of an entry.<br/>
+        /// An entry without a readable number can still be matched by name.
         /// </summary>
         private static bool TryReadKey(JToken token, string name, out TKey key) {
             if (token is JValue { Type: JTokenType.Integer } number) {
@@ -71,8 +72,8 @@ namespace RiseOn.Serializables {
                 } catch (ArgumentException) { }
             }
 
-            var ordinal = name == null ? -1 : Array.IndexOf(EnumMapKeys<TKey>.Names, name);
-            key = ordinal >= 0 ? EnumMapKeys<TKey>.Keys[ordinal] : default;
+            var ordinal = name == null ? -1 : Array.IndexOf(EnumMapKeys<TKey>.names, name);
+            key = ordinal >= 0 ? EnumMapKeys<TKey>.keys[ordinal] : default;
             return ordinal >= 0;
         }
 
@@ -99,7 +100,7 @@ namespace RiseOn.Serializables {
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
-            if (value is null) {
+            if (value == null) {
                 writer.WriteNull();
                 return;
             }

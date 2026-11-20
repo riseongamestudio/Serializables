@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using RiseOn.Utils.Editor;
 using RiseOn.Utils.Editor.SearchWindow;
 using Sirenix.OdinInspector;
@@ -10,7 +10,7 @@ using Object = UnityEngine.Object;
 
 namespace RiseOn.Serializables.Editor {
     public class SerObjectDrawer<TValue> : OdinValueDrawer<SerObject<TValue>>, IDisposable where TValue : class {
-        private const float PICK_BUTTON_WIDTH = 19;
+        private const float PickButtonWidth = 19;
 
         private GameObject            rootPrefab;
         private bool                  allowSceneObjects;
@@ -58,10 +58,10 @@ namespace RiseOn.Serializables.Editor {
         }
 
         private void HandlePickButton(Rect position) {
-            var buttonRect = new Rect(position.xMax - PICK_BUTTON_WIDTH, position.y, PICK_BUTTON_WIDTH, position.height);
+            var buttonRect = new Rect(position.xMax - PickButtonWidth, position.y, PickButtonWidth, position.height);
 
             var evt = Event.current;
-            if (evt.type == EventType.MouseDown
+            if (evt.type is EventType.MouseDown
              && evt.button == 0
              && buttonRect.Contains(evt.mousePosition)) {
                 evt.Use();

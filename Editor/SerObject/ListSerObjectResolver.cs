@@ -1,4 +1,4 @@
-using Sirenix.OdinInspector.Editor;
+﻿using Sirenix.OdinInspector.Editor;
 
 namespace RiseOn.Serializables.Editor {
     [ResolverPriority(100)]

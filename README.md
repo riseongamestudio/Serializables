@@ -21,13 +21,14 @@ Package `com.riseon.serializables`, namespace `RiseOn.Serializables`.
 | Phụ thuộc | Cách có | Dùng cho |
 |---|---|---|
 | Unity 6000.3 | | Bản đang dùng để phát triển |
-| [`com.riseon.utils`](https://github.com/riseongamestudio/Utils/tree/main/Core#readme) 1.0.15 | Tự cài theo `package.json` | `ForwardAttributesTo`, cửa sổ tìm kiếm, `InlineEditorImitator`, Alt+click foldout đệ quy, mục `[SectionList]` của `ListSerObject` và `ListSerRef` |
 | [Odin Inspector](https://odininspector.com) | Cài tay từ Asset Store | Drawer của mọi kiểu trong pack |
+| [`com.riseon.utils`](https://github.com/riseongamestudio/Utils/tree/main/Core#readme) 1.0.18 | Tự cài theo `package.json` | `ForwardAttributesTo`, cửa sổ tìm kiếm, `InlineEditorImitator`, Alt+click foldout đệ quy, mục `[SectionList]` của `ListSerObject` và `ListSerRef` |
 | `com.unity.nuget.newtonsoft-json` | Tùy chọn | Có thì bật converter JSON cho `SerRef`, `SerMoment`, `EnumMap` |
 
-"Tự cài" là khi cài qua registry; cài bằng git URL thì phải cài `com.riseon.utils`
-trước. Odin không có trên UPM nên phải cài vào project trước.
-Thiếu Odin thì project báo một lỗi từ `RiseOn.Serializables.Requirements`.
+"Tự cài" là Package Manager tự lấy theo version từ Unity Registry và các registry khai
+trong manifest, cả khi cài pack bằng git URL. Odin không có trên UPM nên phải cài vào
+project trước. Thiếu Odin thì project báo một lỗi từ
+`RiseOn.Serializables.Requirements`.
 
 Converter JSON tự bật khi project có package Newtonsoft của Unity (define
 `SERIALIZABLES_SUPPORT_NEWTONSOFT` trong assembly của pack). Project dùng DLL Newtonsoft
@@ -51,16 +52,17 @@ mục Lưu JSON của từng thành phần.
     }
   ],
   "dependencies": {
-    "com.riseon.serializables": "1.0.3"
+    "com.riseon.serializables": "1.0.5"
   }
 }
 ```
 
-**Git URL**: cài `com.riseon.utils` trước, rồi *Package Manager → + → Add package
-from git URL*:
+**Git URL**: phụ thuộc vẫn lấy theo version từ registry: `com.riseon.utils` lấy từ
+registry RiseOn như ví dụ trên, hoặc cài bằng git URL trước. Rồi *Package Manager → + →
+Add package from git URL*:
 
 ```
-https://github.com/riseongamestudio/Serializables.git#v1.0.3
+https://github.com/riseongamestudio/Serializables.git
 ```
 
 **Thư mục local**: `"com.riseon.serializables": "file:D:/path/to/Serializables"`.

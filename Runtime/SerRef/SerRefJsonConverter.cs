@@ -1,4 +1,4 @@
-#if SERIALIZABLES_SUPPORT_NEWTONSOFT
+﻿#if SERIALIZABLES_SUPPORT_NEWTONSOFT
 using System;
 using Newtonsoft.Json;
 using UnityEngine.Scripting;
