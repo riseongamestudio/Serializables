@@ -40,10 +40,18 @@ namespace RiseOn.Serializables.Editor {
 
             // A settings page's section, the keys its rows; the search, in the bar's value column, while it is open.
             using var section = Section.Foldout(Property, label.text, label.tooltip, padded: false, barValue: true);
-            if (Property.State.Expanded) searchText = EditorGUI.TextField(section.BarValue, searchText, EditorStyles.toolbarSearchField);
+            if (Property.State.Expanded) searchText = EditorGUI.TextField(SearchRect(section.BarValue), searchText, EditorStyles.toolbarSearchField);
             if (!section.Open) return;
 
             DrawRows(map);
+        }
+
+        // The search style is shorter than a line and draws from the rect's top, so it is centered in the bar's value column by hand.
+        private static Rect SearchRect(Rect value) {
+            var height = EditorStyles.toolbarSearchField.fixedHeight;
+            if (height <= 0 || height >= value.height) return value;
+
+            return new Rect(value.x, value.y + (value.height - height) / 2, value.width, height);
         }
 
         private void DrawRows(EnumMap<TKey, TValue> map) {

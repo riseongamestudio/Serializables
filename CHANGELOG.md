@@ -4,6 +4,13 @@ Mọi thay đổi đáng kể của `com.riseon.serializables` được ghi ở 
 [Keep a Changelog](https://keepachangelog.com/vi/1.1.0/), đánh số theo
 [Semantic Versioning](https://semver.org/lang/vi/).
 
+## [Unreleased]
+
+### Sửa
+
+- Ô search trên thanh của `EnumMap` nằm giữa thanh theo chiều dọc; trước đó nó dính
+  mép trên vì kiểu ô search thấp hơn một dòng.
+
 ## [1.0.5] - 2026-11-20
 
 ### Đổi
