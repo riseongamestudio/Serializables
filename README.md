@@ -22,7 +22,7 @@ Package `com.riseon.serializables`, namespace `RiseOn.Serializables`.
 |---|---|---|
 | Unity 6000.3 | | Bản đang dùng để phát triển |
 | [Odin Inspector](https://odininspector.com) | Cài tay từ Asset Store | Drawer của mọi kiểu trong pack |
-| [`com.riseon.utils`](https://github.com/riseongamestudio/Utils/tree/main/Core#readme) 1.0.18 | Tự cài theo `package.json` | `ForwardAttributesTo`, cửa sổ tìm kiếm, `InlineEditorImitator`, Alt+click foldout đệ quy, mục `[SectionList]` của `ListSerObject` và `ListSerRef` |
+| [`com.riseon.utils`](https://github.com/riseongamestudio/Utils/tree/main/Core#readme) 2.0.0 | Tự cài theo `package.json` | `ForwardAttributesTo`, cửa sổ tìm kiếm, `InlineEditorImitator`, Alt+click foldout đệ quy, mục `[SectionList]` của `ListSerObject` và `ListSerRef`, `[NoRowShade]` của `EnumMap` |
 | `com.unity.nuget.newtonsoft-json` | Tùy chọn | Có thì bật converter JSON cho `SerRef`, `SerMoment`, `EnumMap` |
 
 "Tự cài" là Package Manager tự lấy theo version từ Unity Registry và các registry khai
@@ -52,7 +52,7 @@ mục Lưu JSON của từng thành phần.
     }
   ],
   "dependencies": {
-    "com.riseon.serializables": "1.0.5"
+    "com.riseon.serializables": "1.0.6"
   }
 }
 ```
