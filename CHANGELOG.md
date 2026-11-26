@@ -6,6 +6,11 @@ Mọi thay đổi đáng kể của `com.riseon.serializables` được ghi ở 
 
 ## [Unreleased]
 
+### Thêm
+
+- `EnumMap` theo `[NoRowShade]` của `com.riseon.utils`: field gắn nó thì các dòng không tô
+  sọc xen kẽ.
+
 ### Sửa
 
 - Ô search trên thanh của `EnumMap` nằm giữa thanh theo chiều dọc; trước đó nó dính

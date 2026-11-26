@@ -66,7 +66,8 @@ nguyên, trừ khi code ghi vào một member chưa có entry.
   entry theo enum hiện tại, giá trị lấy đúng như lúc đọc ở trên.
 - Map là một mục gập mở như mục của trang settings RiseOn, mỗi entry một dòng, nhãn là tên
   đã lưu. Khi mục mở, thanh có ô tìm theo tên. Field gắn `[HideLabel]` thì chỉ hiện các dòng,
-  không có thanh.
+  không có thanh. Dòng tô sọc xen kẽ; field gắn `[NoRowShade]` (của `com.riseon.utils`) thì
+  không, cho map mà mỗi giá trị là một mục gập mở riêng.
 - Attribute Odin gắn trên field map (`[PreviewField]`, `[InlineEditor]`...) áp cho
   từng giá trị.
 

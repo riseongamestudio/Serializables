@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
+using RiseOn.Utils;
 using RiseOn.Utils.Editor;
 using Sirenix.Utilities.Editor;
 using UnityEditor;
@@ -55,6 +56,7 @@ namespace RiseOn.Serializables.Editor {
         }
 
         private void DrawRows(EnumMap<TKey, TValue> map) {
+            rows.Shaded = Property.GetAttribute<NoRowShadeAttribute>() == null;
             var entryCount = Math.Min(entriesProp.Children.Count, map.entries.Count);
             var hasSearch  = !string.IsNullOrWhiteSpace(searchText);
             shown.Clear();
